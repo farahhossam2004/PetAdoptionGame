@@ -9,7 +9,7 @@ public class Java_internship {
         Pet myPet = new Pet();
         boolean isAdopted= false;
 
-        Outerloop: while(true) {
+        Outerloop :while(true) {
             System.out.println("\n======= Pet Adoptation Game =======\n");
             System.out.println("1. Adopt a pet");
             System.out.println("2. Feed Pet");
@@ -17,12 +17,12 @@ public class Java_internship {
             System.out.println("4. Check Status");
             System.out.println("5. End Game");
             
-            System.out.println("\nChoose an option: ");
+            System.out.print("\nChoose an option: ");
             choice = readInt();
 
             switch (choice) {
                 case 1:
-                    System.out.println("Enter the name of your pet");
+                    System.out.print("Enter the name of your pet: ");
                     String name = scanner.next();
                     myPet.setName(name);
                     isAdopted = true;
@@ -32,6 +32,11 @@ public class Java_internship {
                 case 2:
                     if (isAdopted){
                         myPet.feedPet();
+                        if(isLose(myPet.getHappinessLevel(), myPet.getHappinessLevel()))
+                        {
+                            System.out.println("You are Lose D:");
+                            endGame(myPet,isAdopted);
+                        }
                         break;
                     }
                     else {
@@ -42,6 +47,11 @@ public class Java_internship {
                 case 3:
                     if (isAdopted) {
                         myPet.playWithPet();
+                        if(isLose(myPet.getHappinessLevel(), myPet.getHappinessLevel()))
+                        {
+                            System.out.println("You are Lose D:");
+                            endGame(myPet,isAdopted);
+                        }
                         break;
                     }
                     else {
@@ -51,7 +61,9 @@ public class Java_internship {
                 
                 case 4:
                     if (isAdopted) {
-                        System.out.println("f");
+                        System.out.println("********* Current Status ******");
+                        System.out.println("Hunger Level : "+myPet.getHungerLevel());
+                        System.out.println("Happiness Level : "+myPet.getHappinessLevel());
                         break;
                     }
                     else {
@@ -60,16 +72,35 @@ public class Java_internship {
                     }
                 
                 case 5:
-                    System.out.println("Final Status / Game Over");
-                    break Outerloop;
-                    
+                    if(isAdopted)
+                    {
+                        System.out.println("1- End this game and adopt new pet");
+                        System.out.println("1- End game and terminate");
+                        int preferEnd = readInt();
+
+                        endGame(myPet,isAdopted);
+                        if(preferEnd == 1)
+                        {
+                            System.out.println("\nThe Game is End for this pet, Thank you ^_^\n\n");
+                        }
+                        else if(preferEnd == 2)
+                        {
+                            System.out.println("\nThe Game is terminate, Thank you ^_^\n\n");
+                            break Outerloop;
+                        }
+
+                    }
+                    else
+                    {
+                        System.out.println("The Game is not start yet!");
+                    }
+                    break;
 
                 default:
                     System.out.println("\n!! Enter a valid number from the menu !!");
                     break;
             }
         }
-        scanner.close();
     }
 
     // Function to read integers only
@@ -89,5 +120,19 @@ public class Java_internship {
                 scanner.nextLine();
             }
         }
+    }
+
+
+    static void endGame(Pet myPet , boolean isAdopted)
+    {
+        System.out.println("********* Final Status ******");
+        System.out.println("Hunger Level : " + myPet.getHungerLevel());
+        System.out.println("Happiness Level : " + myPet.getHappinessLevel());
+        myPet = new Pet();
+        isAdopted = false;
+    }
+    static boolean isLose(int hungryLevel , int happinessLevel)
+    {
+        return hungryLevel == 0 || happinessLevel == 0;
     }
 }
