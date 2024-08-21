@@ -75,7 +75,7 @@ public class Java_internship {
                     if(isAdopted)
                     {
                         System.out.println("1- End this game and adopt new pet");
-                        System.out.println("1- End game and terminate");
+                        System.out.println("2- End game and terminate");
                         int preferEnd = readInt();
 
                         endGame(myPet,isAdopted);
